@@ -1,39 +1,184 @@
-aside {
-  display: block;
-  background-color: #587A8A;
-  width: 400px;
-
-}
+/* Body */
 body {
+  width: 100%;
   margin: 0px;
   font-family: open-sans, sans-serif;
 }
+
 h1 {
   display: flex;
+  margin: 0px 0px 0px 15px;
   font-family: open-sans, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  margin: 0px 0px 0px 15px;
-}
-
-header {
-  background-color: #1F1F3D;
-  color: #FFFFFF;
-  display: flex;
-  height: 70px;
-  align-items: center;
 }
 
 p {
-  color: #FFFFFF;
-  font-family: open-sans, sans-serif;
-  font-weight: 400;
-  font-style: normal;
   margin: 0px 0px 0px 15px;
+  font-family: open-sans, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+/* Header */
+header {
+  align-items: center;
+  display: flex;
+  height: 70px;
+  color: #FFFFFF;
+  background-color: #1F1F3D;
 }
 
 .yo {
   display: flex;
   margin: 0px 10px;
-  color:#FFC30C;
+  color: #FFC30C;
+}
+
+/* Sidebar */
+aside {
+  flex-direction: column;
+  align-content: center;
+  position: fixed;
+  display: flex;
+  width: 350px;
+  height: 100vh;
+  background-color: #587A8A;
+  border-color: #435E6B;
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+}
+
+h5 {
+  margin: 0px 0px 0px 15px;
+  font-family: open-sans, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #F3F6F7;
+}
+
+.add-task-form-button-container {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+}
+
+.task-item-input {
+  width: 100%;
+  height: 35px;
+  padding: 0px;
+  margin: 5px 0px 15px 0px;
+  font-size: 14pt;
+  background-color: #FFFFFF;
+  border-color: #1F1F3D;
+  border-style: solid;
+  border-width: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+
+.enter-todo-list-container {
+  flex-direction: column;
+  position: relative;
+  display: flex;
+  padding: 15px;
+  margin: 0px;
+  border-color: #435E6B;
+  border-style: solid;
+  border-width: 0px 0px 2px 0px;
+}
+
+.side-button {
+  height: 35px;
+  margin: 5px 0px;
+  font-family: open-sans, sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  background-color: #1F1F3D;
+  border: 1px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.filter-by-urgency-container {
+  flex-direction: column;
+  position: relative;
+  display: flex;
+  padding: 0px;
+  margin: 15px;
+}
+
+.filter-by-urgency-button {
+  height: 35px;
+  margin: 5px 0px;
+  font-family: open-sans, sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  background-color: #1F1F3D;
+  border: 1px;
+  border-color: #1F1F3D;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.filter-by-urgency-button:focus {
+  height: 35px;
+  margin: 5px 0px;
+  font-family: open-sans, sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  background-color: #EF4A23;
+  border: 1px;
+  border-color: #782616;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.add-task-button {
+  width: 37px;
+  height: 39px;
+  padding: 0px 2px 0px 0px;
+  margin: 5px 0px 15px 0px;
+  font-family: open-sans, sans-serif;
+  font-size: 20pt;
+  font-weight: normal;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  background-color: #1F1F3D;
+  border: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  outline: none;
+}
+
+.form-input {
+  height: 35px;
+  padding: 0px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-size: 14pt;
+  background-color: #FFFFFF;
+  border-color: #1F1F3D;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 3px;
 }
