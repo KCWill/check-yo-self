@@ -3,7 +3,7 @@
 
 <head>
   <title>
-    Check yo' self!
+    Check Yo' Self
   </title>
   <link rel='stylesheet' type='text/css' href='style.css' />
   <link rel="stylesheet" href="https://use.typekit.net/qnv8ncl.css">
@@ -21,10 +21,14 @@
       <input class='task-title-input  form-input' type='text' />
       <h5>Task Item</h5>
       <section class='add-task-form-button-container'>
-        <input class='task-item-input' type='text' name='task'><button type='button' class='add-task-button'>+</button>
+        <input id='task-item-input' type='text' name='task'><button type='button' class='add-task-button'>+</button>
       </section>
-      <input class='make-task-list-button side-button' type='button' value='Make Task List' />
-      <input class='clear-all-button side-button' type='button' value='Clear All' />
+      <section class='draft-tasks-container'>
+      <ul class='draft-tasks'>
+      </ul>
+    </section>
+    <input class='make-task-list-button side-button' type='button' value='Make Task List' />
+    <input class='clear-all-button side-button' type='button' value='Clear All' />
     </section>
     <section class='filter-by-urgency-container'>
       <button class='filter-by-urgency-button' type='button'>Filter by Urgency</button>
