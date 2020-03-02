@@ -1,21 +1,17 @@
 class ToDo {
-  constructor(title, iDToDo, tasks){
+  constructor(title, iDToDo, tasks, urgency, completed){
     this.title = title;
     this.iDToDo = iDToDo;
     this.tasks = tasks;
-    this.urgency = false;
-    this.completed = false;
+    this.urgency = urgency || false;
+    this.completed = completed || false;
   }
-  saveToStorage() {
-    var savingArray = [];
-    savingArray.push(this.title);
-    savingArray.push(this.idTask);
-    savingArray.push(this.tasks);
-    savingArray.push(this.urgency);
-    savingArray.push(this.completed);
-    return savingArray;
+
+  toggleCompleted(){
+    this.completed = !this.completed;
   }
-  deleteFromStorage(tasks){
+
+  deleteFromStorage(){
 
   }
   updateToDo(titleUp,urgencyUp){

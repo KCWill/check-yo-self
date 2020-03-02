@@ -1,7 +1,7 @@
 class Task {
-  constructor(text, taskNumber){
+  constructor(text, taskNumber, completed){
     this.text = text;
     this.taskNumber = taskNumber;
-    this.completed = false;
+    this.completed = completed || false;
   }
 }

@@ -67,7 +67,6 @@ h5 {
   margin: 0px;
 }
 
-
 #task-item-input {
   width: 100%;
   height: 35px;
@@ -166,7 +165,7 @@ li {
 }
 
 .side-button:active {
-  border-color:#435E6B;
+  border-color: #435E6B;
   color: #435E6B;
   border-style: solid;
 }
