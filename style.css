@@ -40,10 +40,9 @@ header {
 aside {
   flex-direction: column;
   align-content: center;
-  position: fixed;
   display: flex;
   width: 350px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #587A8A;
   border-color: #435E6B;
   border-style: solid;
@@ -117,6 +116,38 @@ h5 {
   border-color: #435E6B;
   border-style: solid;
   border-width: 0px 0px 2px 0px;
+}
+
+.remove-task-button {
+  background: url('assets/delete.svg');
+  cursor: pointer;
+  outline: none;
+  border: none;
+  height: 20px;
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.remove-task-button:active {
+  background: url('assets/delete-active.svg');
+}
+
+ul {
+  list-style-type: none;
+  margin: 0px 0px 10px 10px;
+  padding: 0px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin: 0px 0px 5px 0px;
+  padding: 5px;
+  font-family: open-sans, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #FFFFFF;
 }
 
 .side-button {
