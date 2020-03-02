@@ -19,15 +19,15 @@
     <section class='enter-todo-list-container'>
       <h5>Task Title</h5>
       <input class='task-title-input  form-input' type='text' />
+      <section class='draft-tasks-container'>
+        <ul class='draft-tasks'>
+        </ul>
+      </section>
       <h5>Task Item</h5>
       <section class='add-task-form-button-container'>
         <input id='task-item-input' type='text' name='task'><button type='button' class='add-task-button'>+</button>
       </section>
-      <section class='draft-tasks-container'>
-      <ul class='draft-tasks'>
-      </ul>
-    </section>
-    <input class='make-task-list-button side-button' type='button' value='Make Task List' />
+    <input class='make-task-list-button side-button' type='button' value='Make Task List' onclick='makeTaskList()'/>
     <input class='clear-all-button side-button' type='button' value='Clear All' />
     </section>
     <section class='filter-by-urgency-container'>
