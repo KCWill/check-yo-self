@@ -1,5 +1,5 @@
 class ToDo {
-  constructor(title, iDToDo, tasks, urgency, completed){
+  constructor(title, iDToDo, tasks, urgency, completed) {
     this.title = title;
     this.iDToDo = iDToDo;
     this.tasks = tasks;
@@ -7,19 +7,19 @@ class ToDo {
     this.completed = completed || false;
   }
 
-  toggleCompleted(){
+  toggleCompleted() {
     this.completed = !this.completed;
   }
 
-  deleteFromStorage(){
+  deleteFromStorage() {
 
   }
-  updateToDo(titleUp,urgencyUp){
+  updateToDo(titleUp, urgencyUp) {
     this.title = titleUp;
-    this.title = urgencyUp;
+    this.urgency = urgencyUp;
   }
-  updateTask(taskUp, textUp, completedUp){
+  updateTask(taskUp, textUp, completedUp) {
     taskUp.text = textUp;
-    taskUp.text = completedUp;
+    taskUp.completed = completedUp;
   }
 }

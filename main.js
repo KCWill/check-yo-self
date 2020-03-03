@@ -5,17 +5,15 @@ var taskItemInput = document.getElementById('task-item-input');
 var taskTitleInput = document.querySelector('.task-title-input')
 var taskCounterAside = 0;
 var taskCounterClass = 0;
-var toDoCounter = 0;
 var objectArrayFromLS = [];
 var toDoArray = [];
 var taskArrayAside = [];
 var taskArrayClass = [];
 
-// var stringifiedData;
 window.addEventListener('load', retrieveFromLocalStorage);
 
 function addTaskInAside() {
-  tasksInAside.innerHTML += `<li><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
+  tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
   taskArrayAside.push(taskItemInput.value);
   taskCounterAside++;
   taskItemInput.value = '';
@@ -40,9 +38,8 @@ function makeTaskList() {
       taskArrayClass.push(task);
     }
   }
-  var toDo = new ToDo(taskTitleInput.value, toDoCounter, taskArrayClass);
+  var toDo = new ToDo(taskTitleInput.value, toDoArray.length+1, taskArrayClass);
   toDoArray.push(toDo);
-  toDoCounter++;
   tasksInAside.innerHTML = '';
   taskTitleInput.value = '';
   taskArrayAside = [];
@@ -51,11 +48,36 @@ function makeTaskList() {
   taskCounterClass = 0;
   console.log('make task output', toDoArray);
   pushToLocalStorage();
-  displayToDo();
+  displayToDoSkeleton();
 }
 
-function displayToDo(){
-  
+function displayToDoSkeleton(){
+  document.querySelector('.todo-list-cards').innerHTML = '';
+  for (var i = 0; i < toDoArray.length; i++){
+  document.querySelector('.todo-list-cards').innerHTML += `
+  <section class='card-contents-container'>
+    <section class='title-container'>
+      <h3>${toDoArray[i].title}</h3>
+    </section>
+    <section class='tasks-container-in-card'>
+      <ul class='list-of-tasks-in-card' data-listid='${toDoArray[i].iDToDo}'>
+      </ul>
+    </section>
+    <section class='urgent-and-delete'>
+      <section class='urgent-and-text'>
+        <input type='submit' value='' class='urgent-button'><h5 class='urgent-label'>Urgent</h5>
+      </section>
+      <section class='delete-and-text'>
+        <input type='submit' value='' class='delete-todo'>
+        <h5 class='delete-label'>Delete</h5>
+      </section>
+    </section>
+  </section>`
+  for (var j = 0; j < toDoArray[i].tasks.length; j++){
+  document.querySelector(`[data-listid='${toDoArray[i].iDToDo}']`).innerHTML +=`
+    <li class='list-of-tasks-in-card' data-taskid ='${toDoArray[i].tasks[j].taskNumber}'><input type='submit' value='' class='complete-task-button'>${toDoArray[i].tasks[j].text}</li>`;
+    }
+  }
 }
 
 function pushToLocalStorage() {
@@ -72,19 +94,19 @@ function retrieveFromLocalStorage() {
   var stringifiedData = localStorage.getItem('storedData');
   objectArrayFromLS = JSON.parse(stringifiedData);
   reinstantiateFromLocalStorage();
+  displayToDoSkeleton();
 }
 
 function reinstantiateFromLocalStorage() {
-  var tasks = [];
-  console.log('objectArrayFromLS', objectArrayFromLS);
   for (var i = 0; i < objectArrayFromLS.length; i++) {
-    for (var j = 0; j < objectArrayFromLS[i].length; j++) {
-      var task = new Task(objectArrayFromLS[i].text, j, objectArrayFromLS[i].completed);
+    var tasks = [];
+    for (var j = 0; j < objectArrayFromLS[i].tasks.length; j++) {
+      var task = new Task(objectArrayFromLS[i].tasks[j].text, j, objectArrayFromLS[i].completed);
       tasks.push(task);
       console.log('tasks', tasks);
     }
     var toDo = new ToDo(objectArrayFromLS[i].title, objectArrayFromLS[i].iDToDo, tasks, objectArrayFromLS[i].urgency, objectArrayFromLS[i].completed);
     toDoArray.push(toDo);
   }
-
+    console.log(toDoArray);
 }
