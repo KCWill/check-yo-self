@@ -38,7 +38,7 @@ function makeTaskList() {
       taskArrayClass.push(task);
     }
   }
-  var toDo = new ToDo(taskTitleInput.value, toDoArray.length+1, taskArrayClass);
+  var toDo = new ToDo(taskTitleInput.value, toDoArray.length, taskArrayClass);
   toDoArray.push(toDo);
   tasksInAside.innerHTML = '';
   taskTitleInput.value = '';
@@ -60,7 +60,7 @@ function displayToDoSkeleton(){
       <h3>${toDoArray[i].title}</h3>
     </section>
     <section class='tasks-container-in-card'>
-      <ul class='list-of-tasks-in-card' data-listid='${toDoArray[i].iDToDo}'>
+      <ul class='list-of-tasks-in-card'data-listid='${toDoArray[i].iDToDo}'>
       </ul>
     </section>
     <section class='urgent-and-delete'>
@@ -75,7 +75,7 @@ function displayToDoSkeleton(){
   </section>`
   for (var j = 0; j < toDoArray[i].tasks.length; j++){
   document.querySelector(`[data-listid='${toDoArray[i].iDToDo}']`).innerHTML +=`
-    <li class='list-of-tasks-in-card' data-taskid ='${toDoArray[i].tasks[j].taskNumber}'><input type='submit' value='' class='complete-task-button'>${toDoArray[i].tasks[j].text}</li>`;
+    <li class='list-of-tasks-in-card' data-taskid ='${toDoArray[i].tasks[j].taskNumber}'><input type='submit' value='' class='complete-task-button' data-listid='${toDoArray[i].iDToDo}' data-taskid='${toDoArray[i].tasks[j].taskNumber}'>${toDoArray[i].tasks[j].text}</li>`;
     }
   }
 }
@@ -95,13 +95,14 @@ function retrieveFromLocalStorage() {
   objectArrayFromLS = JSON.parse(stringifiedData);
   reinstantiateFromLocalStorage();
   displayToDoSkeleton();
+  persistMarkedTasks();
 }
 
 function reinstantiateFromLocalStorage() {
   for (var i = 0; i < objectArrayFromLS.length; i++) {
     var tasks = [];
     for (var j = 0; j < objectArrayFromLS[i].tasks.length; j++) {
-      var task = new Task(objectArrayFromLS[i].tasks[j].text, j, objectArrayFromLS[i].completed);
+      var task = new Task(objectArrayFromLS[i].tasks[j].text, j, objectArrayFromLS[i].tasks[j].completed);
       tasks.push(task);
       console.log('tasks', tasks);
     }
@@ -109,4 +110,35 @@ function reinstantiateFromLocalStorage() {
     toDoArray.push(toDo);
   }
     console.log(toDoArray);
+}
+
+var checkComplete = document.querySelector('.todo-list-cards').addEventListener('click',eventHandler)
+
+function eventHandler(event){
+  if (event.target.classList.contains('complete-task-button')){
+    markCompleted(event);
+  }
+}
+
+function persistMarkedTasks(){
+  for (var i = 0; i < toDoArray.length; i++){
+    for (var j = 0; j < toDoArray[i].tasks.length; j++){
+      if (toDoArray[i].tasks[j].completed){
+        var tempToDoList = document.querySelectorAll(`[data-listid='${toDoArray[i].iDToDo}']`);
+        console.log('tempToDoList',tempToDoList);
+        tempToDoList[j+1].classList.toggle('complete-task-button-checked');
+        tempToDoList[j+1].parentNode.classList.toggle('completed-task-text');
+        console.log('nada')
+      }
+    }
+  }
+}
+
+function markCompleted(event){
+  event.target.parentNode.classList.toggle('completed-task-text');
+  event.target.classList.toggle('complete-task-button-checked');
+  var taskNum = event.target.dataset.taskid;
+  var listNum = event.target.dataset.listid;
+  toDoArray[listNum].tasks[taskNum].toggleCompleted();
+  pushToLocalStorage();
 }
