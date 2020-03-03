@@ -262,6 +262,8 @@ li.draft-tasks {
   margin: 15px;
 }
 
+
+
 .complete-task-button {
   background: url('assets/checkbox.svg');
   cursor: pointer;
@@ -275,8 +277,13 @@ li.draft-tasks {
 
 .complete-task-button-checked {
   background: url('assets/checkbox-active.svg');
+  cursor: pointer;
+  outline: none;
+  border: none;
   height: 20px;
   width: 20px;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .urgent-button {
@@ -292,7 +299,7 @@ li.draft-tasks {
   background: url('assets/urgent-active.svg');
   border: none;
   height: 30px;
-  width: 23px;
+  width: 24px;
   outline: none;
   cursor: pointer;
 }
@@ -342,12 +349,25 @@ li.list-of-tasks-in-card {
   padding: 5px 5px 5px 7px;
 }
 
-h5.delete-label,
-h5.urgent-label {
+.urgent-container {
+  background-color: #FFE89D;
+  border-color: #FFC30C !important;
+}
+
+.delete-label,
+.urgent-label {
   font-weight: 400;
   text-transform: uppercase;
   color: #3C6577;
   margin: 0px;
+}
+
+.urgent-label-active {
+  color: #B23A25 !important;
+}
+
+.delete-label-when-urgent-active {
+  color: #1F1F3D !important;
 }
 
 .delete-and-text,

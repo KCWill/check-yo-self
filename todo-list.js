@@ -11,6 +11,10 @@ class ToDo {
     this.completed = !this.completed;
   }
 
+  toggleUrgent(){
+    this.urgency = !this.urgency;
+  }
+
   deleteFromStorage() {
 
   }
