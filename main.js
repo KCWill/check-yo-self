@@ -49,6 +49,7 @@ function makeTaskList() {
   console.log('make task output', toDoArray);
   pushToLocalStorage();
   displayToDoSkeleton();
+  retrieveFromLocalStorage();
 }
 
 function displayToDoSkeleton() {
@@ -78,6 +79,7 @@ function displayToDoSkeleton() {
     <li class='list-of-tasks-in-card' data-taskid ='${toDoArray[i].tasks[j].taskNumber}'><input type='submit' value='' class='complete-task-button' data-listid='${toDoArray[i].iDToDo}' data-taskid='${toDoArray[i].tasks[j].taskNumber}'>${toDoArray[i].tasks[j].text}</li>`;
     }
   }
+  displayDelete();
 }
 
 function pushToLocalStorage() {
@@ -99,6 +101,7 @@ function retrieveFromLocalStorage() {
 }
 
 function reinstantiateFromLocalStorage() {
+  toDoArray = [];
   for (var i = 0; i < objectArrayFromLS.length; i++) {
     var tasks = [];
     for (var j = 0; j < objectArrayFromLS[i].tasks.length; j++) {
@@ -122,10 +125,6 @@ function eventHandler(event) {
   }
 }
 
-
-
-
-
 function markCompleted(event) {
   event.target.parentNode.classList.toggle('completed-task-text');
   event.target.classList.toggle('complete-task-button-checked');
@@ -133,6 +132,7 @@ function markCompleted(event) {
   var listNum = event.target.dataset.listid;
   toDoArray[listNum].tasks[taskNum].toggleCompleted();
   pushToLocalStorage();
+  retrieveFromLocalStorage();
 }
 
 function persistCompletedTasks() {
@@ -158,11 +158,12 @@ function markUrgent(event) {
   event.target.parentNode.parentNode.parentNode.children[1].classList.toggle('urgent-container')
   event.target.parentNode.parentNode.parentNode.children[0].classList.toggle('urgent-container')
   pushToLocalStorage();
+  retrieveFromLocalStorage();
 }
 
-function persistUrgentToDos(){
-  for (var i = 0; i < toDoArray.length; i++){
-    if (toDoArray[i].urgency){
+function persistUrgentToDos() {
+  for (var i = 0; i < toDoArray.length; i++) {
+    if (toDoArray[i].urgency) {
       var listOfTasks = document.querySelector(`[data-listid='${toDoArray[i].iDToDo}']`);
       listOfTasks.parentNode.parentNode.classList.toggle('urgent-container');
       listOfTasks.parentNode.parentNode.children[2].children[0].children[0].classList.toggle('urgent-button-marked');
@@ -172,4 +173,21 @@ function persistUrgentToDos(){
       listOfTasks.parentNode.parentNode.children[0].classList.toggle('urgent-container');
     }
   }
+}
+
+function displayDelete() {
+  for (var i = 0; i < toDoArray.length; i++) {
+    var completeCounter = 0;
+    for (var j = 0; j < toDoArray[i].tasks.length; j++) {
+      var currentListOfTasks = document.querySelector(`[data-listid='${toDoArray[i].iDToDo}']`);
+      currentListOfTasks.parentNode.parentNode.children[2].children[1].children[0].classList.remove('delete-todo-active');
+      if (toDoArray[i].tasks[j].completed === true) {
+        completeCounter++;
+      };
+      if (completeCounter === toDoArray[i].tasks.length) {
+        currentListOfTasks.parentNode.parentNode.children[2].children[1].children[0].classList.add('delete-todo-active');
+      }
+    }
+  }
+
 }

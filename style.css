@@ -320,6 +320,10 @@ li.draft-tasks {
   cursor: pointer;
 }
 
+.delete-todo-active {
+  background: url('assets/delete-active.svg');
+}
+
 .delete-todo-marked {
   background: url('assets/delete-active.svg');
   border: none;
