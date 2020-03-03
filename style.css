@@ -5,12 +5,25 @@ body {
   font-family: open-sans, sans-serif;
 }
 
+main {
+  display: flex;
+  flex-direction: row;
+}
+
 h1 {
   display: flex;
   margin: 0px 0px 0px 15px;
   font-family: open-sans, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
+}
+
+h3 {
+  color: black;
+  display: flex;
+  margin: 5px 15px 5px 15px;
+  font-family: open-sans, sans-serif;
+  font-weight: 800;
 }
 
 p {
@@ -138,9 +151,7 @@ ul {
   padding: 0px;
 }
 
-li {
-  display: flex;
-  align-items: center;
+li.draft-tasks {
   margin: 0px 0px 5px 0px;
   padding: 5px;
   font-family: open-sans, sans-serif;
@@ -227,4 +238,122 @@ li {
   border-width: 2px;
   border-radius: 3px;
   outline: none;
+}
+
+/* Cards */
+.todo-list-cards {
+  display: inline-block;
+}
+
+.title-container {
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: #C7D3D8;
+}
+
+.card-contents-container {
+  width: 350px;
+  background-color: #FAFDFF;
+  border-style: solid;
+  border-color: #C7D3D8;
+  border-width: 2px;
+  color: #1F1F3D;
+  padding: 0px;
+  margin: 15px;
+}
+
+.complete-task-button {
+  background: url('assets/checkbox.svg');
+  cursor: pointer;
+  outline: none;
+  border: none;
+  height: 20px;
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.complete-task-button-checked {
+  background: url('assets/checkbox-active.svg');
+  height: 20px;
+  width: 20px;
+}
+
+.urgent-button {
+  background: url('assets/urgent.svg');
+  border: none;
+  height: 30px;
+  width: 24px;
+  outline: none;
+  cursor: pointer;
+}
+
+.urgent-button-marked {
+  background: url('assets/urgent-active.svg');
+  border: none;
+  height: 30px;
+  width: 23px;
+  outline: none;
+  cursor: pointer;
+}
+
+.urgent-and-delete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.delete-todo {
+  background: url('assets/delete.svg');
+  border: none;
+  height: 30px;
+  width: 30px;
+  outline: none;
+  cursor: pointer;
+}
+
+.delete-todo-marked {
+  background: url('assets/delete-active.svg');
+  border: none;
+  height: 30px;
+  width: 30px;
+  outline: none;
+  cursor: pointer;
+}
+
+.completed-task-text {
+  color: #3C6577 !important;
+  font-style: italic !important;
+}
+
+li.list-of-tasks-in-card {
+  margin: 10px 0px 10px 0px;
+  font-family: open-sans, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #1F1F3D;
+}
+
+.tasks-container-in-card {
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: #C7D3D8;
+  padding: 5px 5px 5px 7px;
+}
+
+h5.delete-label,
+h5.urgent-label {
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #3C6577;
+  margin: 0px;
+}
+
+.delete-and-text,
+.urgent-and-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
