@@ -248,23 +248,9 @@ li.draft-tasks {
   outline: none;
 }
 
-.filter-by-urgency-button:focus {
-  height: 35px;
-  margin: 5px 0px;
-  font-family: open-sans, sans-serif;
-  font-size: 10pt;
-  font-style: normal;
-  font-weight: 400;
-  color: #FFFFFF;
-  text-align: center;
-  cursor: pointer;
-  background-color: #EF4A23;
-  border: 1px;
-  border-color: #782616;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 2px;
-  outline: none;
+.filter-by-urgency-button-active {
+  background-color: #EF4A23 !important;
+  border-color: #782616 !important;
 }
 
 .form-input {
