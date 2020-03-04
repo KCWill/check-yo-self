@@ -14,10 +14,6 @@ class ToDo {
   toggleUrgent(){
     this.urgency = !this.urgency;
   }
-
-  deleteFromStorage() {
-
-  }
   updateToDo(titleUp, urgencyUp) {
     this.title = titleUp;
     this.urgency = urgencyUp;

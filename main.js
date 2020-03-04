@@ -13,11 +13,43 @@ var taskArrayClass = [];
 
 window.addEventListener('load', retrieveFromLocalStorage);
 
+
+function enableButtons() {
+  if (taskTitleInput.value.length > 0 && taskArrayAside.length > 0) {
+    document.querySelector('.make-task-list-button').disabled = false;
+    document.querySelector('.clear-all-button').disabled = false;
+  }
+  if (taskTitleInput.value.length > 0) {
+    document.querySelector('.clear-all-button').disabled = false;
+  } else if (taskItemInput.value.length > 0) {
+    document.querySelector('.add-task-button').disabled = false;
+    document.querySelector('.clear-all-button').disabled = false;
+  } else if (taskTitleInput.value.length === 0) {
+    document.querySelector('.make-task-list-button').disabled = true;
+    document.querySelector('.clear-all-button').disabled = true;
+  } else {
+    document.querySelector('.add-task-button').disabled = true;
+    document.querySelector('.clear-all-button').disabled = true;
+  }
+}
+
+function clearAllInputs() {
+  taskCounterAside = 0;
+  taskCounterClass = 0;
+  taskArrayAside = [];
+  taskArrayClass = [];
+  taskTitleInput.value = '';
+  taskItemInput.value = '';
+  tasksInAside.innerHTML = '';
+  enableButtons();
+}
+
 function addTaskInAside() {
   tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
   taskArrayAside.push(taskItemInput.value);
   taskCounterAside++;
   taskItemInput.value = '';
+  enableButtons();
 }
 
 function deleteTaskInAside(event) {
@@ -40,15 +72,11 @@ function makeTaskList() {
   }
   var toDo = new ToDo(taskTitleInput.value, toDoArray.length, taskArrayClass);
   toDoArray.push(toDo);
-  tasksInAside.innerHTML = '';
-  taskTitleInput.value = '';
-  taskArrayAside = [];
-  taskArrayClass = [];
-  taskCounterAside = 0;
-  taskCounterClass = 0;
+  clearAllInputs()
   pushToLocalStorage();
   displayToDoSkeleton();
   retrieveFromLocalStorage();
+  enableButtons();
 }
 
 function displayToDoSkeleton() {
@@ -120,15 +148,15 @@ function eventHandler(event) {
     markCompleted(event);
   } else if (event.target.classList.contains('urgent-button')) {
     markUrgent(event);
-  } else if (event.target.classList.contains('delete-todo') && event.target.disabled === false ){
+  } else if (event.target.classList.contains('delete-todo') && event.target.disabled === false) {
     deleteToDo(event);
   }
 }
 
-function deleteToDo(event){
+function deleteToDo(event) {
   var whichToDo = event.target.dataset.buttonid;
   console.log(whichToDo)
-  toDoArray.splice(whichToDo,1);
+  toDoArray.splice(whichToDo, 1);
   pushToLocalStorage();
   retrieveFromLocalStorage();
 }

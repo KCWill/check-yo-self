@@ -263,8 +263,6 @@ li.draft-tasks {
   margin: 15px;
 }
 
-
-
 .complete-task-button {
   background: url('assets/checkbox.svg');
   cursor: pointer;
