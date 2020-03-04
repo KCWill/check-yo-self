@@ -62,21 +62,23 @@ function searchTasks() {
 
 function filterByUrgency() {
   if (urgencyCheck === 0) {
+    document.querySelector('.filter-by-urgency-button').classList.add('filter-by-urgency-button-active');
     for (var i = 0; i < toDoArray.length; i++) {
       if (!toDoArray[i].urgency) {
         var cardToHide = document.querySelector(`[data-hidesearchurgency='${i}']`)
         cardToHide.classList.add('hide');
-        urgencyCheck++;
-        document.querySelector('.filter-by-urgency-button').classList.add('filter-by-urgency-button-active')
-        return
+
       }
     }
+    urgencyCheck++;
+    return;
   } else if (urgencyCheck === 1){
-    for (var i = 0; i < toDoArray.length; i++) {
-        var cardToHide = document.querySelector(`[data-hidesearchurgency='${i}']`)
+    document.querySelector('.filter-by-urgency-button').classList.remove('filter-by-urgency-button-active')
+    for (var j = 0; j < toDoArray.length; j++) {
+        cardToHide = document.querySelector(`[data-hidesearchurgency='${j}']`)
         cardToHide.classList.remove('hide');
     }
-    document.querySelector('.filter-by-urgency-button').classList.remove('filter-by-urgency-button-active')
+
     urgencyCheck = 0;
   }
 }
