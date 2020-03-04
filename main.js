@@ -13,11 +13,48 @@ var taskArrayClass = [];
 
 window.addEventListener('load', retrieveFromLocalStorage);
 
+
+function enableButtons() {
+  if (taskTitleInput.value.length === 0 && taskItemInput.value.length === 0 && taskArrayAside.length === 0) {
+    document.querySelector('.add-task-button').disabled = true;
+    document.querySelector('.clear-all-button').disabled = true;
+    document.querySelector('.make-task-list-button').disabled = true;
+  } else if (taskTitleInput.value.length > 0 && taskArrayAside.length > 0 && taskItemInput.value.length === 0) {
+    document.querySelector('.make-task-list-button').disabled = false;
+    document.querySelector('.clear-all-button').disabled = false;
+    document.querySelector('.add-task-button').disabled = true;
+  } else if (taskItemInput.value.length > 0) {
+      document.querySelector('.add-task-button').disabled = false;
+      document.querySelector('.clear-all-button').disabled = false;
+  } else if (taskTitleInput.value.length > 0 ) {
+    document.querySelector('.clear-all-button').disabled = false;
+  } else if (taskTitleInput.value.length === 0) {
+    document.querySelector('.make-task-list-button').disabled = true;
+    document.querySelector('.clear-all-button').disabled = true;
+  }
+}
+
+function clearAllInputs() {
+  taskCounterAside = 0;
+  taskCounterClass = 0;
+  taskArrayAside = [];
+  taskArrayClass = [];
+  taskTitleInput.value = '';
+  taskItemInput.value = '';
+  tasksInAside.innerHTML = '';
+  enableButtons();
+}
+
+function searchTasks() {
+
+};
+
 function addTaskInAside() {
   tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
   taskArrayAside.push(taskItemInput.value);
   taskCounterAside++;
   taskItemInput.value = '';
+  enableButtons();
 }
 
 function deleteTaskInAside(event) {
@@ -40,15 +77,11 @@ function makeTaskList() {
   }
   var toDo = new ToDo(taskTitleInput.value, toDoArray.length, taskArrayClass);
   toDoArray.push(toDo);
-  tasksInAside.innerHTML = '';
-  taskTitleInput.value = '';
-  taskArrayAside = [];
-  taskArrayClass = [];
-  taskCounterAside = 0;
-  taskCounterClass = 0;
-  console.log('make task output', toDoArray);
+  clearAllInputs()
   pushToLocalStorage();
   displayToDoSkeleton();
+  retrieveFromLocalStorage();
+  enableButtons();
 }
 
 function displayToDoSkeleton() {
@@ -65,10 +98,10 @@ function displayToDoSkeleton() {
     </section>
     <section class='urgent-and-delete'>
       <section class='urgent-and-text'>
-        <input type='submit' value='' class='urgent-button' data-listid='${toDoArray[i].iDToDo}'><h5 class='urgent-label'>Urgent</h5>
+        <input type='submit' value='' class='urgent-button' data-listid='${toDoArray[i].iDToDo}' ><h5 class='urgent-label'>Urgent</h5>
       </section>
       <section class='delete-and-text'>
-        <input type='submit' value='' class='delete-todo'>
+        <input type='submit' value='' class='delete-todo' data-buttonid='${toDoArray[i].iDToDo}'disabled>
         <h5 class='delete-label'>Delete</h5>
       </section>
     </section>
@@ -78,9 +111,11 @@ function displayToDoSkeleton() {
     <li class='list-of-tasks-in-card' data-taskid ='${toDoArray[i].tasks[j].taskNumber}'><input type='submit' value='' class='complete-task-button' data-listid='${toDoArray[i].iDToDo}' data-taskid='${toDoArray[i].tasks[j].taskNumber}'>${toDoArray[i].tasks[j].text}</li>`;
     }
   }
+  displayDelete();
 }
 
 function pushToLocalStorage() {
+  localStorage.clear();
   var dataToSave = [];
   for (var i = 0; i < toDoArray.length; i++) {
     dataToSave.push(toDoArray[i]);
@@ -91,6 +126,9 @@ function pushToLocalStorage() {
 
 function retrieveFromLocalStorage() {
   var stringifiedData = localStorage.getItem('storedData');
+  if (stringifiedData === null){
+    return
+  }
   objectArrayFromLS = JSON.parse(stringifiedData);
   reinstantiateFromLocalStorage();
   displayToDoSkeleton();
@@ -99,17 +137,16 @@ function retrieveFromLocalStorage() {
 }
 
 function reinstantiateFromLocalStorage() {
+  toDoArray = [];
   for (var i = 0; i < objectArrayFromLS.length; i++) {
     var tasks = [];
     for (var j = 0; j < objectArrayFromLS[i].tasks.length; j++) {
       var task = new Task(objectArrayFromLS[i].tasks[j].text, j, objectArrayFromLS[i].tasks[j].completed);
       tasks.push(task);
-      console.log('tasks', tasks);
     }
-    var toDo = new ToDo(objectArrayFromLS[i].title, objectArrayFromLS[i].iDToDo, tasks, objectArrayFromLS[i].urgency, objectArrayFromLS[i].completed);
+    var toDo = new ToDo(objectArrayFromLS[i].title, i, tasks, objectArrayFromLS[i].urgency, objectArrayFromLS[i].completed);
     toDoArray.push(toDo);
   }
-  console.log(toDoArray);
 }
 
 cardContainer.addEventListener('click', eventHandler);
@@ -119,12 +156,18 @@ function eventHandler(event) {
     markCompleted(event);
   } else if (event.target.classList.contains('urgent-button')) {
     markUrgent(event);
+  } else if (event.target.classList.contains('delete-todo') && event.target.disabled === false) {
+    deleteToDo(event);
   }
 }
 
-
-
-
+function deleteToDo(event) {
+  var whichToDo = event.target.dataset.buttonid;
+  console.log(whichToDo)
+  toDoArray.splice(whichToDo, 1);
+  pushToLocalStorage();
+  retrieveFromLocalStorage();
+}
 
 function markCompleted(event) {
   event.target.parentNode.classList.toggle('completed-task-text');
@@ -133,6 +176,7 @@ function markCompleted(event) {
   var listNum = event.target.dataset.listid;
   toDoArray[listNum].tasks[taskNum].toggleCompleted();
   pushToLocalStorage();
+  retrieveFromLocalStorage();
 }
 
 function persistCompletedTasks() {
@@ -140,7 +184,6 @@ function persistCompletedTasks() {
     for (var j = 0; j < toDoArray[i].tasks.length; j++) {
       if (toDoArray[i].tasks[j].completed) {
         var tempToDoList = document.querySelectorAll(`[data-listid='${toDoArray[i].iDToDo}']`);
-        console.log('tempToDoList', tempToDoList);
         tempToDoList[j + 1].classList.toggle('complete-task-button-checked');
         tempToDoList[j + 1].parentNode.classList.toggle('completed-task-text');
       }
@@ -158,11 +201,12 @@ function markUrgent(event) {
   event.target.parentNode.parentNode.parentNode.children[1].classList.toggle('urgent-container')
   event.target.parentNode.parentNode.parentNode.children[0].classList.toggle('urgent-container')
   pushToLocalStorage();
+  retrieveFromLocalStorage();
 }
 
-function persistUrgentToDos(){
-  for (var i = 0; i < toDoArray.length; i++){
-    if (toDoArray[i].urgency){
+function persistUrgentToDos() {
+  for (var i = 0; i < toDoArray.length; i++) {
+    if (toDoArray[i].urgency) {
       var listOfTasks = document.querySelector(`[data-listid='${toDoArray[i].iDToDo}']`);
       listOfTasks.parentNode.parentNode.classList.toggle('urgent-container');
       listOfTasks.parentNode.parentNode.children[2].children[0].children[0].classList.toggle('urgent-button-marked');
@@ -170,6 +214,23 @@ function persistUrgentToDos(){
       listOfTasks.parentNode.parentNode.children[2].children[1].children[1].classList.toggle('delete-label-when-urgent-active');
       listOfTasks.parentNode.classList.toggle('urgent-container');
       listOfTasks.parentNode.parentNode.children[0].classList.toggle('urgent-container');
+    }
+  }
+}
+
+function displayDelete() {
+  for (var i = 0; i < toDoArray.length; i++) {
+    var completeCounter = 0;
+    for (var j = 0; j < toDoArray[i].tasks.length; j++) {
+      var currentListOfTasks = document.querySelector(`[data-listid='${toDoArray[i].iDToDo}']`);
+      currentListOfTasks.parentNode.parentNode.children[2].children[1].children[0].classList.remove('delete-todo-active');
+      if (toDoArray[i].tasks[j].completed === true) {
+        completeCounter++;
+      };
+      if (completeCounter === toDoArray[i].tasks.length) {
+        currentListOfTasks.parentNode.parentNode.children[2].children[1].children[0].classList.add('delete-todo-active');
+        document.querySelector(`[data-buttonid='${toDoArray[i].iDToDo}']`).disabled = false;
+      }
     }
   }
 }

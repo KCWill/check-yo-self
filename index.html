@@ -6,33 +6,37 @@
     Check Yo' Self
   </title>
   <link rel='stylesheet' type='text/css' href='style.css' />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,800&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <header>
     <h1>Check<div class='yo'>yo'</div>self</h1>
-    <div class='search-bar'>
+    <div class='search-bar-container'>
+      <div class='search-icon-container'>
+        <img class='search-icon' src='assets/search.svg' alt='Search Magnifying Glass'>
+      </div>
+      <input class='search-input' type='text' onkeyup='searchTasks()'/>
     </div>
   </header>
   <main>
     <aside>
       <section class='enter-todo-list-container'>
         <h5>Task Title</h5>
-        <input class='task-title-input  form-input' type='text' />
+        <input class='task-title-input  form-input' type='text' onkeyup='enableButtons()'/>
         <section class='draft-tasks-container'>
           <ul class='draft-tasks'>
           </ul>
         </section>
         <h5>Task Item</h5>
         <section class='add-task-form-button-container'>
-          <input id='task-item-input' type='text' name='task'><button type='button' class='add-task-button'>+</button>
+          <input id='task-item-input' type='text' name='task' onkeyup='enableButtons()'><button type='button' class='add-task-button' disabled>+</button>
         </section>
-        <input class='make-task-list-button side-button' type='button' value='Make Task List' onclick='makeTaskList()' />
-        <input class='clear-all-button side-button' type='button' value='Clear All' />
+        <input class='make-task-list-button side-button' type='button' value='Make Task List' onclick='makeTaskList()' disabled/>
+        <input class='clear-all-button side-button' type='button' value='Clear All' onclick='clearAllInputs()'/>
       </section>
       <section class='filter-by-urgency-container'>
-        <button class='filter-by-urgency-button' type='button'>Filter by Urgency</button>
+        <button class='filter-by-urgency-button' type='button' disabled>Filter by Urgency</button>
       </section>
     </aside>
     <section class='todo-list-cards'>
