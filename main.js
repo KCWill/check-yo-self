@@ -15,20 +15,21 @@ window.addEventListener('load', retrieveFromLocalStorage);
 
 
 function enableButtons() {
-  if (taskTitleInput.value.length > 0 && taskArrayAside.length > 0) {
+  if (taskTitleInput.value.length === 0 && taskItemInput.value.length === 0 && taskArrayAside.length === 0) {
+    document.querySelector('.add-task-button').disabled = true;
+    document.querySelector('.clear-all-button').disabled = true;
+    document.querySelector('.make-task-list-button').disabled = true;
+  } else if (taskTitleInput.value.length > 0 && taskArrayAside.length > 0 && taskItemInput.value.length === 0) {
     document.querySelector('.make-task-list-button').disabled = false;
     document.querySelector('.clear-all-button').disabled = false;
-  }
-  if (taskTitleInput.value.length > 0) {
-    document.querySelector('.clear-all-button').disabled = false;
+    document.querySelector('.add-task-button').disabled = true;
   } else if (taskItemInput.value.length > 0) {
-    document.querySelector('.add-task-button').disabled = false;
+      document.querySelector('.add-task-button').disabled = false;
+      document.querySelector('.clear-all-button').disabled = false;
+  } else if (taskTitleInput.value.length > 0 ) {
     document.querySelector('.clear-all-button').disabled = false;
   } else if (taskTitleInput.value.length === 0) {
     document.querySelector('.make-task-list-button').disabled = true;
-    document.querySelector('.clear-all-button').disabled = true;
-  } else {
-    document.querySelector('.add-task-button').disabled = true;
     document.querySelector('.clear-all-button').disabled = true;
   }
 }
@@ -43,6 +44,10 @@ function clearAllInputs() {
   tasksInAside.innerHTML = '';
   enableButtons();
 }
+
+function searchTasks() {
+
+};
 
 function addTaskInAside() {
   tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
@@ -121,6 +126,9 @@ function pushToLocalStorage() {
 
 function retrieveFromLocalStorage() {
   var stringifiedData = localStorage.getItem('storedData');
+  if (stringifiedData === null){
+    return
+  }
   objectArrayFromLS = JSON.parse(stringifiedData);
   reinstantiateFromLocalStorage();
   displayToDoSkeleton();

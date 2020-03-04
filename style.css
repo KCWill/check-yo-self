@@ -38,6 +38,7 @@ p {
 header {
   align-items: center;
   display: flex;
+  justify-content: space-between;
   height: 70px;
   color: #FFFFFF;
   background-color: #1F1F3D;
@@ -47,6 +48,46 @@ header {
   display: flex;
   margin: 0px 10px;
   color: #FFC30C;
+}
+.search-bar-container {
+  background-color: #587A8A;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  display: flex;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  padding: 0px;
+  margin: 0px 15px 0px 0px;
+}
+
+.search-input {
+  height: 35px;
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 14pt;
+  background-color: #FFFFFF;
+  border-color: #1F1F3D;
+  border-style: none;
+  border-right-style: solid;
+  border-width: 2px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  outline: none;
+}
+
+.search-icon {
+  display: flex;
+  width: 25px;
+  height: 25px;
+  padding: 0px 2px 0px 2px;
+  margin: 5px 5px 5px 5px;
+  border: 2px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  outline: none;
 }
 
 /* Sidebar */
