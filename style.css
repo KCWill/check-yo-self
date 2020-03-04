@@ -421,3 +421,6 @@ li.list-of-tasks-in-card {
   justify-content: center;
   align-items: center;
 }
+.hide {
+  display: none;
+}

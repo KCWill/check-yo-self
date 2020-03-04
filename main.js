@@ -10,6 +10,7 @@ var objectArrayFromLS = [];
 var toDoArray = [];
 var taskArrayAside = [];
 var taskArrayClass = [];
+var searchArray = [];
 
 window.addEventListener('load', retrieveFromLocalStorage);
 
@@ -46,8 +47,23 @@ function clearAllInputs() {
 }
 
 function searchTasks() {
-
+  searchArray = [];
+  for (var i = 0; i < toDoArray.length; i++){
+    var term = document.querySelector('.search-input').value;
+    var matchSearch = toDoArray[i].title.indexOf(term);
+    var cardToHide = document.querySelector(`[data-hidesearch='${i}']`)
+    if (matchSearch == -1){
+      cardToHide.classList.add('hide');
+    }
+    else {
+      cardToHide.classList.remove('hide');
+    }
+  }
 };
+
+function filterByUrgency(){
+  
+}
 
 function addTaskInAside() {
   tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
@@ -88,7 +104,7 @@ function displayToDoSkeleton() {
   cardContainer.innerHTML = '';
   for (var i = 0; i < toDoArray.length; i++) {
     cardContainer.innerHTML += `
-  <section class='card-contents-container' data-taskid=${toDoArray[i].iDToDo}>
+  <section class='card-contents-container' data-hidesearch='${toDoArray[i].iDToDo}' data-taskid='${toDoArray[i].iDToDo}'>
     <section class='title-container'>
       <h3>${toDoArray[i].title}</h3>
     </section>
