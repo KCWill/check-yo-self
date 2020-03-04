@@ -10,7 +10,8 @@ var objectArrayFromLS = [];
 var toDoArray = [];
 var taskArrayAside = [];
 var taskArrayClass = [];
-var searchArray = [];
+var urgencyCheck = 0;
+
 
 window.addEventListener('load', retrieveFromLocalStorage);
 
@@ -25,9 +26,9 @@ function enableButtons() {
     document.querySelector('.clear-all-button').disabled = false;
     document.querySelector('.add-task-button').disabled = true;
   } else if (taskItemInput.value.length > 0) {
-      document.querySelector('.add-task-button').disabled = false;
-      document.querySelector('.clear-all-button').disabled = false;
-  } else if (taskTitleInput.value.length > 0 ) {
+    document.querySelector('.add-task-button').disabled = false;
+    document.querySelector('.clear-all-button').disabled = false;
+  } else if (taskTitleInput.value.length > 0) {
     document.querySelector('.clear-all-button').disabled = false;
   } else if (taskTitleInput.value.length === 0) {
     document.querySelector('.make-task-list-button').disabled = true;
@@ -47,23 +48,39 @@ function clearAllInputs() {
 }
 
 function searchTasks() {
-  searchArray = [];
-  for (var i = 0; i < toDoArray.length; i++){
+  for (var i = 0; i < toDoArray.length; i++) {
     var term = document.querySelector('.search-input').value;
     var matchSearch = toDoArray[i].title.indexOf(term);
-    var cardToHide = document.querySelector(`[data-hidesearch='${i}']`)
-    if (matchSearch == -1){
+    var cardToHide = document.querySelector(`[data-hidesearchurgency='${i}']`)
+    if (matchSearch == -1) {
       cardToHide.classList.add('hide');
-    }
-    else {
+    } else {
       cardToHide.classList.remove('hide');
     }
   }
 };
 
-function filterByUrgency(){
-  
+function filterByUrgency() {
+  if (urgencyCheck === 0) {
+    for (var i = 0; i < toDoArray.length; i++) {
+      if (!toDoArray[i].urgency) {
+        var cardToHide = document.querySelector(`[data-hidesearchurgency='${i}']`)
+        cardToHide.classList.add('hide');
+        urgencyCheck++;
+        document.querySelector('.filter-by-urgency-button').classList.add('filter-by-urgency-button-active')
+        return
+      }
+    }
+  } else if (urgencyCheck === 1){
+    for (var i = 0; i < toDoArray.length; i++) {
+        var cardToHide = document.querySelector(`[data-hidesearchurgency='${i}']`)
+        cardToHide.classList.remove('hide');
+    }
+    document.querySelector('.filter-by-urgency-button').classList.remove('filter-by-urgency-button-active')
+    urgencyCheck = 0;
+  }
 }
+
 
 function addTaskInAside() {
   tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
@@ -104,7 +121,7 @@ function displayToDoSkeleton() {
   cardContainer.innerHTML = '';
   for (var i = 0; i < toDoArray.length; i++) {
     cardContainer.innerHTML += `
-  <section class='card-contents-container' data-hidesearch='${toDoArray[i].iDToDo}' data-taskid='${toDoArray[i].iDToDo}'>
+  <section class='card-contents-container' data-hidesearchurgency='${toDoArray[i].iDToDo}' data-taskid='${toDoArray[i].iDToDo}'>
     <section class='title-container'>
       <h3>${toDoArray[i].title}</h3>
     </section>
@@ -142,7 +159,7 @@ function pushToLocalStorage() {
 
 function retrieveFromLocalStorage() {
   var stringifiedData = localStorage.getItem('storedData');
-  if (stringifiedData === null){
+  if (stringifiedData === null) {
     return
   }
   objectArrayFromLS = JSON.parse(stringifiedData);
