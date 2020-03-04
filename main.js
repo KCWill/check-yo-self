@@ -46,7 +46,6 @@ function makeTaskList() {
   taskArrayClass = [];
   taskCounterAside = 0;
   taskCounterClass = 0;
-  console.log('make task output', toDoArray);
   pushToLocalStorage();
   displayToDoSkeleton();
   retrieveFromLocalStorage();
@@ -66,10 +65,10 @@ function displayToDoSkeleton() {
     </section>
     <section class='urgent-and-delete'>
       <section class='urgent-and-text'>
-        <input type='submit' value='' class='urgent-button' data-listid='${toDoArray[i].iDToDo}'><h5 class='urgent-label'>Urgent</h5>
+        <input type='submit' value='' class='urgent-button' data-listid='${toDoArray[i].iDToDo}' ><h5 class='urgent-label'>Urgent</h5>
       </section>
       <section class='delete-and-text'>
-        <input type='submit' value='' class='delete-todo'>
+        <input type='submit' value='' class='delete-todo' data-buttonid='${toDoArray[i].iDToDo}'disabled>
         <h5 class='delete-label'>Delete</h5>
       </section>
     </section>
@@ -83,6 +82,7 @@ function displayToDoSkeleton() {
 }
 
 function pushToLocalStorage() {
+  localStorage.clear();
   var dataToSave = [];
   for (var i = 0; i < toDoArray.length; i++) {
     dataToSave.push(toDoArray[i]);
@@ -107,12 +107,10 @@ function reinstantiateFromLocalStorage() {
     for (var j = 0; j < objectArrayFromLS[i].tasks.length; j++) {
       var task = new Task(objectArrayFromLS[i].tasks[j].text, j, objectArrayFromLS[i].tasks[j].completed);
       tasks.push(task);
-      console.log('tasks', tasks);
     }
-    var toDo = new ToDo(objectArrayFromLS[i].title, objectArrayFromLS[i].iDToDo, tasks, objectArrayFromLS[i].urgency, objectArrayFromLS[i].completed);
+    var toDo = new ToDo(objectArrayFromLS[i].title, i, tasks, objectArrayFromLS[i].urgency, objectArrayFromLS[i].completed);
     toDoArray.push(toDo);
   }
-  console.log(toDoArray);
 }
 
 cardContainer.addEventListener('click', eventHandler);
@@ -122,7 +120,17 @@ function eventHandler(event) {
     markCompleted(event);
   } else if (event.target.classList.contains('urgent-button')) {
     markUrgent(event);
+  } else if (event.target.classList.contains('delete-todo') && event.target.disabled === false ){
+    deleteToDo(event);
   }
+}
+
+function deleteToDo(event){
+  var whichToDo = event.target.dataset.buttonid;
+  console.log(whichToDo)
+  toDoArray.splice(whichToDo,1);
+  pushToLocalStorage();
+  retrieveFromLocalStorage();
 }
 
 function markCompleted(event) {
@@ -140,7 +148,6 @@ function persistCompletedTasks() {
     for (var j = 0; j < toDoArray[i].tasks.length; j++) {
       if (toDoArray[i].tasks[j].completed) {
         var tempToDoList = document.querySelectorAll(`[data-listid='${toDoArray[i].iDToDo}']`);
-        console.log('tempToDoList', tempToDoList);
         tempToDoList[j + 1].classList.toggle('complete-task-button-checked');
         tempToDoList[j + 1].parentNode.classList.toggle('completed-task-text');
       }
@@ -186,8 +193,8 @@ function displayDelete() {
       };
       if (completeCounter === toDoArray[i].tasks.length) {
         currentListOfTasks.parentNode.parentNode.children[2].children[1].children[0].classList.add('delete-todo-active');
+        document.querySelector(`[data-buttonid='${toDoArray[i].iDToDo}']`).disabled = false;
       }
     }
   }
-
 }
