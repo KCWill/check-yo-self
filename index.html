@@ -16,14 +16,14 @@
       <div class='search-icon-container'>
         <img class='search-icon' src='assets/search.svg' alt='Search Magnifying Glass'>
       </div>
-      <input class='search-input' type='text' onkeyup='searchTasks()'/>
+      <input class='search-input' type='text' onkeyup='searchTasks()' />
     </div>
   </header>
   <main>
     <aside>
       <section class='enter-todo-list-container'>
         <h5>Task Title</h5>
-        <input class='task-title-input  form-input' type='text' onkeyup='enableButtons()'/>
+        <input class='task-title-input  form-input' type='text' onkeyup='enableButtons()' />
         <section class='draft-tasks-container'>
           <ul class='draft-tasks'>
           </ul>
@@ -32,8 +32,8 @@
         <section class='add-task-form-button-container'>
           <input id='task-item-input' type='text' name='task' onkeyup='enableButtons()'><button type='button' class='add-task-button' disabled>+</button>
         </section>
-        <input class='make-task-list-button side-button' type='button' value='Make Task List' onclick='makeTaskList()' disabled/>
-        <input class='clear-all-button side-button' type='button' value='Clear All' onclick='clearAllInputs()'/>
+        <input class='make-task-list-button side-button' type='button' value='Make Task List' onclick='makeTaskList()' disabled />
+        <input class='clear-all-button side-button' type='button' value='Clear All' onclick='clearAllInputs()' />
       </section>
       <section class='filter-by-urgency-container'>
         <button class='filter-by-urgency-button' onclick='filterByUrgency()'>Filter by Urgency</button>

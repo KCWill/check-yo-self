@@ -4,7 +4,7 @@ class Task {
     this.taskNumber = taskNumber;
     this.completed = completed || false;
   }
-  toggleCompleted(){
+  toggleCompleted() {
     this.completed = !this.completed;
   }
 }

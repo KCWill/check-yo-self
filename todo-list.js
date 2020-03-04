@@ -11,15 +11,7 @@ class ToDo {
     this.completed = !this.completed;
   }
 
-  toggleUrgent(){
+  toggleUrgent() {
     this.urgency = !this.urgency;
-  }
-  updateToDo(titleUp, urgencyUp) {
-    this.title = titleUp;
-    this.urgency = urgencyUp;
-  }
-  updateTask(taskUp, textUp, completedUp) {
-    taskUp.text = textUp;
-    taskUp.completed = completedUp;
   }
 }

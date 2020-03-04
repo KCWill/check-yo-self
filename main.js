@@ -11,9 +11,9 @@ var toDoArray = [];
 var taskArrayAside = [];
 var taskArrayClass = [];
 var urgencyCheck = 0;
-
-
 window.addEventListener('load', retrieveFromLocalStorage);
+cardContainer.addEventListener('click', eventHandler);
+
 
 
 function enableButtons() {
@@ -72,17 +72,16 @@ function filterByUrgency() {
     }
     urgencyCheck++;
     return;
-  } else if (urgencyCheck === 1){
+  } else if (urgencyCheck === 1) {
     document.querySelector('.filter-by-urgency-button').classList.remove('filter-by-urgency-button-active')
     for (var j = 0; j < toDoArray.length; j++) {
-        cardToHide = document.querySelector(`[data-hidesearchurgency='${j}']`)
-        cardToHide.classList.remove('hide');
+      cardToHide = document.querySelector(`[data-hidesearchurgency='${j}']`)
+      cardToHide.classList.remove('hide');
     }
 
     urgencyCheck = 0;
   }
 }
-
 
 function addTaskInAside() {
   tasksInAside.innerHTML += `<li class='draft-tasks'><input type='submit' value='' class='remove-task-button' data-tempNum='${taskCounterAside}'>${taskItemInput.value}</li>`;
@@ -183,8 +182,6 @@ function reinstantiateFromLocalStorage() {
     toDoArray.push(toDo);
   }
 }
-
-cardContainer.addEventListener('click', eventHandler);
 
 function eventHandler(event) {
   if (event.target.classList.contains('complete-task-button')) {
